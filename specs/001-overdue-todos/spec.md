@@ -5,6 +5,16 @@
 **Status**: Draft  
 **Input**: User description: "Support for Overdue Todo Items - Users need a clear, visual way to identify which todos have not been completed by their due date"
 
+## Clarifications
+
+### Session 2026-01-29
+
+- Q: What specific visual treatment should be used for the overdue indicator? → A: Color-based with text label (e.g., red color + "Overdue" badge)
+- Q: Should overdue status update automatically when a new day begins, or is page refresh acceptable? → A: Page refresh required
+- Q: Should overdue comparison use date-only or include time precision? → A: Date and time comparison - precise timestamp checking
+- Q: How should time zones be handled for overdue calculation? → A: Browser local time
+- Q: Should immediate updates apply to all users or just the user making the change? → A: Single user only (optimistic UI update)
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Visual Identification of Overdue Todos (Priority: P1)
@@ -17,7 +27,7 @@ Users can immediately see which of their incomplete todos are past their due dat
 
 **Acceptance Scenarios**:
 
-1. **Given** a todo list with multiple todos, **When** viewing the list and a todo has a due date in the past and is not completed, **Then** the todo is displayed with a clear visual indicator (such as distinct color, icon, or text label) that distinguishes it from non-overdue todos
+1. **Given** a todo list with multiple todos, **When** viewing the list and a todo has a due date in the past and is not completed, **Then** the todo is displayed with a color-based visual indicator (red styling) combined with a text label (such as "Overdue" badge) that distinguishes it from non-overdue todos
 2. **Given** a todo is marked as overdue, **When** the user completes the todo, **Then** the overdue visual indicator is removed immediately
 3. **Given** a todo has a due date of today, **When** viewing the todo list, **Then** the todo is not marked as overdue (only items with due dates before today are overdue)
 
@@ -25,15 +35,15 @@ Users can immediately see which of their incomplete todos are past their due dat
 
 ### User Story 2 - Persistent Overdue Status Through Date Changes (Priority: P2)
 
-The overdue status of todos automatically updates as dates change. When a new day begins, todos that become overdue automatically display the overdue visual indicator without requiring page refresh or manual action.
+The overdue status of todos updates to reflect the current date whenever the page is loaded or refreshed. When a new day begins, todos that become overdue will display the overdue visual indicator upon the next page load.
 
-**Why this priority**: This ensures data accuracy and reduces user confusion, but the feature still works if users need to refresh the page to see updated statuses. This is important for user experience but not critical for basic functionality.
+**Why this priority**: This ensures data accuracy and reduces user confusion. While automatic real-time updates would be ideal, page refresh is an acceptable and standard approach that aligns with typical web application behavior.
 
 **Independent Test**: Can be tested by creating a todo with tomorrow's date, then simulating a day passing (or adjusting system time), and verifying the todo becomes marked as overdue. Delivers value by maintaining accurate overdue status without user intervention.
 
 **Acceptance Scenarios**:
 
-1. **Given** a todo with a due date of tomorrow, **When** the date changes to the next day (the todo's due date passes), **Then** the todo automatically displays the overdue visual indicator
+1. **Given** a todo with a due date of tomorrow, **When** the date changes to the next day (the todo's due date passes) and the page is refreshed or reloaded, **Then** the todo displays the overdue visual indicator
 2. **Given** an overdue todo, **When** the user edits the todo to extend the due date to a future date, **Then** the overdue visual indicator is removed immediately
 3. **Given** multiple todos with different due dates, **When** viewing the list over multiple days, **Then** each todo's overdue status reflects its current relationship to today's date
 
@@ -59,7 +69,9 @@ The overdue visual indicator remains consistent and visible throughout all todo 
 
 - What happens when a todo has no due date? (The todo should never be marked as overdue since there is no date to compare against)
 - What happens when the system date/time is incorrect? (The overdue status will be determined based on the system's current date, which may be incorrect)
-- What happens when viewing todos at exactly midnight? (Todos with today's date should not be overdue; only dates before today should be overdue)
+- What happens when users are in different time zones? (Each user sees overdue status based on their browser's local time zone, so a todo due at 5 PM EST may show as overdue for a user in PST at 2 PM their local time)
+- What happens when viewing todos at exactly midnight? (The system compares full timestamps; a todo due at 11:59 PM today becomes overdue after that specific time, not just after the date changes)
+- What happens when a todo is due later today? (Todos with future timestamps today are not overdue until that specific time passes)
 - What happens when a user edits a todo's due date from future to past? (The overdue indicator should appear immediately upon saving)
 - What happens when a completed todo becomes overdue (due to date passing after completion)? (Completed todos should never show overdue indicators, regardless of their due date)
 
@@ -67,20 +79,20 @@ The overdue visual indicator remains consistent and visible throughout all todo 
 
 ### Functional Requirements
 
-- **FR-001**: System MUST compare each incomplete todo's due date against the current date to determine overdue status
-- **FR-002**: System MUST apply a distinct visual indicator to todos that are overdue (due date is before today's date and todo is not completed)
+- **FR-001**: System MUST compare each incomplete todo's due date and time (full timestamp) against the current date and time to determine overdue status
+- **FR-002**: System MUST apply a distinct visual indicator to todos that are overdue (due date is before today's date and todo is not completed), consisting of both color styling (red) and a text label (e.g., "Overdue" badge) for accessibility
 - **FR-003**: System MUST exclude completed todos from overdue visual indicators, regardless of their due date
 - **FR-004**: System MUST exclude todos without due dates from overdue visual indicators
-- **FR-005**: System MUST update overdue status immediately when a todo's completion status changes (from incomplete to complete or vice versa)
-- **FR-006**: System MUST update overdue status immediately when a todo's due date is modified
-- **FR-007**: System MUST treat todos with today's date as not overdue (only past dates are overdue)
+- **FR-005**: System MUST update overdue status immediately for the current user when a todo's completion status changes (from incomplete to complete or vice versa)
+- **FR-006**: System MUST update overdue status immediately for the current user when a todo's due date is modified
+- **FR-007**: System MUST treat todos with future timestamps (date and time in the future) as not overdue; only todos with timestamps before the current moment are overdue
 - **FR-008**: System MUST display overdue indicators consistently across all views where todos are displayed
-- **FR-009**: System MUST determine "today's date" based on the user's local date/time
-- **FR-010**: System MUST maintain visual distinction that is clear and easily noticeable for users to identify overdue items quickly
+- **FR-009**: System MUST determine current timestamp (date and time) based on the user's browser local time zone for precise overdue comparison
+- **FR-010**: System MUST maintain visual distinction using both color (red) and text label ("Overdue") that is clear and easily noticeable for users to identify overdue items quickly, ensuring accessibility for users with color vision deficiencies
 
 ### Key Entities
 
-- **Todo Item**: Existing entity with attributes including title, due date (optional), completion status, and created date. The overdue status is a derived property based on the relationship between the due date and current date, combined with completion status.
+- **Todo Item**: Existing entity with attributes including title, due date with time (timestamp, optional), completion status, and created date. The overdue status is a derived property based on comparing the due timestamp against the current timestamp, combined with completion status.
 
 ## Success Criteria *(mandatory)*
 
@@ -88,6 +100,6 @@ The overdue visual indicator remains consistent and visible throughout all todo 
 
 - **SC-001**: Users can identify which todos are overdue within 2 seconds of viewing their todo list
 - **SC-002**: 95% of users correctly identify overdue todos on first glance without reading dates manually
-- **SC-003**: Overdue status updates reflect immediately (within 100ms) when users complete a todo or change its due date
+- **SC-003**: Overdue status updates reflect immediately (within 100ms) for the current user when they complete a todo or change its due date (optimistic UI update)
 - **SC-004**: Zero completed todos display overdue indicators, ensuring accuracy of overdue identification
 - **SC-005**: Users report improved task prioritization and reduced time spent manually checking due dates (qualitative feedback)

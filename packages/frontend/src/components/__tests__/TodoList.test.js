@@ -59,4 +59,55 @@ describe('TodoList Component', () => {
     expect(screen.getAllByLabelText(/Edit/)).toHaveLength(2);
     expect(screen.getAllByLabelText(/Delete/)).toHaveLength(2);
   });
+
+  describe('Overdue consistency across multiple todos', () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+      jest.setSystemTime(new Date('2026-01-29T12:00:00Z'));
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
+    it('should maintain overdue indicators when performing actions on other todos', () => {
+      const todosWithOverdue = [
+        {
+          id: 1,
+          title: 'Overdue Todo 1',
+          dueDate: '2026-01-20T12:00:00Z',
+          completed: 0,
+          createdAt: '2026-01-15T00:00:00Z'
+        },
+        {
+          id: 2,
+          title: 'Future Todo',
+          dueDate: '2026-02-05T12:00:00Z',
+          completed: 0,
+          createdAt: '2026-01-16T00:00:00Z'
+        },
+        {
+          id: 3,
+          title: 'Overdue Todo 2',
+          dueDate: '2026-01-25T12:00:00Z',
+          completed: 0,
+          createdAt: '2026-01-17T00:00:00Z'
+        }
+      ];
+
+      const { container } = render(
+        <TodoList todos={todosWithOverdue} {...mockHandlers} isLoading={false} />
+      );
+
+      // Verify two overdue badges are present
+      const overdueBadges = screen.getAllByText('Overdue');
+      expect(overdueBadges).toHaveLength(2);
+
+      // Verify correct todos have overdue class
+      const cards = container.querySelectorAll('.todo-card');
+      expect(cards[0]).toHaveClass('overdue'); // Overdue Todo 1
+      expect(cards[1]).not.toHaveClass('overdue'); // Future Todo
+      expect(cards[2]).toHaveClass('overdue'); // Overdue Todo 2
+    });
+  });
 });

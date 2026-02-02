@@ -24,8 +24,8 @@ This is a web application with monorepo structure:
 
 **Purpose**: Create directory structure for new utility module
 
-- [ ] T001 Create utils directory in packages/frontend/src/ (if not exists)
-- [ ] T002 [P] Create __tests__ directory in packages/frontend/src/utils/ (if not exists)
+- [X] T001 Create utils directory in packages/frontend/src/ (if not exists)
+- [X] T002 [P] Create __tests__ directory in packages/frontend/src/utils/ (if not exists)
 
 **Checkpoint**: Directory structure ready for utility implementation
 
@@ -37,13 +37,13 @@ This is a web application with monorepo structure:
 
 **⚠️ CRITICAL**: This phase must be complete before any user story work can begin
 
-- [ ] T003 Create isOverdue utility function in packages/frontend/src/utils/dateUtils.js
-- [ ] T004 Write unit tests for isOverdue (null/undefined dates) in packages/frontend/src/utils/__tests__/dateUtils.test.js
-- [ ] T005 Write unit tests for isOverdue (completed todos) in packages/frontend/src/utils/__tests__/dateUtils.test.js
-- [ ] T006 Write unit tests for isOverdue (past due dates) in packages/frontend/src/utils/__tests__/dateUtils.test.js
-- [ ] T007 Write unit tests for isOverdue (future due dates) in packages/frontend/src/utils/__tests__/dateUtils.test.js
-- [ ] T008 Write unit tests for isOverdue (invalid date formats) in packages/frontend/src/utils/__tests__/dateUtils.test.js
-- [ ] T009 Write unit tests for isOverdue (boundary cases - midnight, exact current time) in packages/frontend/src/utils/__tests__/dateUtils.test.js
+- [X] T003 Create isOverdue utility function in packages/frontend/src/utils/dateUtils.js
+- [X] T004 Write unit tests for isOverdue (null/undefined dates) in packages/frontend/src/utils/__tests__/dateUtils.test.js
+- [X] T005 Write unit tests for isOverdue (completed todos) in packages/frontend/src/utils/__tests__/dateUtils.test.js
+- [X] T006 Write unit tests for isOverdue (past due dates) in packages/frontend/src/utils/__tests__/dateUtils.test.js
+- [X] T007 Write unit tests for isOverdue (future due dates) in packages/frontend/src/utils/__tests__/dateUtils.test.js
+- [X] T008 Write unit tests for isOverdue (invalid date formats) in packages/frontend/src/utils/__tests__/dateUtils.test.js
+- [X] T009 Write unit tests for isOverdue (boundary cases - midnight, exact current time) in packages/frontend/src/utils/__tests__/dateUtils.test.js
 - [ ] T010 Run unit tests and verify 100% coverage for dateUtils.js
 
 **Checkpoint**: Foundation ready - isOverdue utility is tested and working. User story implementation can now begin.
@@ -58,18 +58,18 @@ This is a web application with monorepo structure:
 
 ### Implementation for User Story 1
 
-- [ ] T011 [US1] Import isOverdue utility in packages/frontend/src/components/TodoCard.js
-- [ ] T012 [US1] Add overdue status calculation in TodoCard component (call isOverdue with todo.dueDate and todo.completed)
-- [ ] T013 [US1] Add conditional 'overdue' CSS class to todo-card container based on overdue status
-- [ ] T014 [US1] Add conditional rendering of overdue badge element when overdue is true
-- [ ] T015 [P] [US1] Define .todo-card.overdue styles in packages/frontend/src/components/TodoCard.css (red left border, light red background)
-- [ ] T016 [P] [US1] Define .overdue-badge styles in packages/frontend/src/components/TodoCard.css (red background, white text, padding, border-radius)
-- [ ] T017 [P] [US1] Add dark mode overdue styles in packages/frontend/src/components/TodoCard.css
-- [ ] T018 [P] [US1] Add overdue color variables to packages/frontend/src/styles/theme.css (--danger-color, --danger-bg-light, --danger-bg-dark)
-- [ ] T019 [US1] Write integration test: overdue badge displays for incomplete past due todo in packages/frontend/src/components/__tests__/TodoCard.test.js
-- [ ] T020 [US1] Write integration test: overdue badge NOT displayed for completed past due todo in packages/frontend/src/components/__tests__/TodoCard.test.js
-- [ ] T021 [US1] Write integration test: overdue badge NOT displayed for future due date in packages/frontend/src/components/__tests__/TodoCard.test.js
-- [ ] T022 [US1] Write integration test: overdue badge NOT displayed for todo without due date in packages/frontend/src/components/__tests__/TodoCard.test.js
+- [X] T011 [US1] Import isOverdue utility in packages/frontend/src/components/TodoCard.js
+- [X] T012 [US1] Add overdue status calculation in TodoCard component (call isOverdue with todo.dueDate and todo.completed)
+- [X] T013 [US1] Add conditional 'overdue' CSS class to todo-card container based on overdue status
+- [X] T014 [US1] Add conditional rendering of overdue badge element when overdue is true
+- [X] T015 [P] [US1] Define .todo-card.overdue styles in packages/frontend/src/components/TodoCard.css (red left border, light red background)
+- [X] T016 [P] [US1] Define .overdue-badge styles in packages/frontend/src/components/TodoCard.css (red background, white text, padding, border-radius)
+- [X] T017 [P] [US1] Add dark mode overdue styles in packages/frontend/src/components/TodoCard.css
+- [X] T018 [P] [US1] Add overdue color variables to packages/frontend/src/styles/theme.css (--danger-color, --danger-bg-light, --danger-bg-dark)
+- [X] T019 [US1] Write integration test: overdue badge displays for incomplete past due todo in packages/frontend/src/components/__tests__/TodoCard.test.js
+- [X] T020 [US1] Write integration test: overdue badge NOT displayed for completed past due todo in packages/frontend/src/components/__tests__/TodoCard.test.js
+- [X] T021 [US1] Write integration test: overdue badge NOT displayed for future due date in packages/frontend/src/components/__tests__/TodoCard.test.js
+- [X] T022 [US1] Write integration test: overdue badge NOT displayed for todo without due date in packages/frontend/src/components/__tests__/TodoCard.test.js
 - [ ] T023 [US1] Run integration tests and verify all TodoCard overdue tests pass
 - [ ] T024 [US1] Manual browser test: Create todo with past due date and verify red border and "Overdue" badge appear
 - [ ] T025 [US1] Manual browser test: Complete overdue todo and verify indicators disappear immediately
@@ -86,9 +86,9 @@ This is a web application with monorepo structure:
 
 ### Implementation for User Story 2
 
-- [ ] T026 [US2] Write integration test: future todo becomes overdue after date change and page refresh in packages/frontend/src/components/__tests__/TodoCard.test.js
-- [ ] T027 [US2] Write integration test: editing overdue todo to future date removes overdue indicator immediately in packages/frontend/src/components/__tests__/TodoCard.test.js
-- [ ] T028 [US2] Write integration test: multiple todos with different due dates show correct overdue status in packages/frontend/src/components/__tests__/TodoCard.test.js
+- [X] T026 [US2] Write integration test: future todo becomes overdue after date change and page refresh in packages/frontend/src/components/__tests__/TodoCard.test.js
+- [X] T027 [US2] Write integration test: editing overdue todo to future date removes overdue indicator immediately in packages/frontend/src/components/__tests__/TodoCard.test.js
+- [X] T028 [US2] Write integration test: multiple todos with different due dates show correct overdue status in packages/frontend/src/components/__tests__/TodoCard.test.js
 - [ ] T029 [US2] Run integration tests and verify User Story 2 tests pass
 - [ ] T030 [US2] Manual browser test: Create todo with tomorrow's date
 - [ ] T031 [US2] Manual browser test: Change system date to tomorrow (or wait), refresh page, verify todo is now marked overdue
@@ -106,8 +106,8 @@ This is a web application with monorepo structure:
 
 ### Implementation for User Story 3
 
-- [ ] T033 [US3] Write integration test: newly created todo with past due date immediately shows overdue indicator in packages/frontend/src/components/__tests__/TodoCard.test.js
-- [ ] T034 [US3] Write integration test: overdue indicators remain consistent when performing actions (delete, complete, edit) on other todos in packages/frontend/src/components/__tests__/TodoList.test.js
+- [X] T033 [US3] Write integration test: newly created todo with past due date immediately shows overdue indicator in packages/frontend/src/components/__tests__/TodoCard.test.js
+- [X] T034 [US3] Write integration test: overdue indicators remain consistent when performing actions (delete, complete, edit) on other todos in packages/frontend/src/components/__tests__/TodoList.test.js
 - [ ] T035 [US3] Run integration tests and verify User Story 3 tests pass
 - [ ] T036 [US3] Manual browser test: Create new todo with past due date, verify overdue badge appears immediately
 - [ ] T037 [US3] Manual browser test: Have multiple overdue todos, delete one, verify others still show overdue indicators
@@ -121,16 +121,16 @@ This is a web application with monorepo structure:
 
 **Purpose**: Final touches and validation
 
-- [ ] T039 [P] Verify all tests pass with npm test --workspace=frontend
-- [ ] T040 [P] Verify code coverage meets 80%+ target for modified files
-- [ ] T041 [P] Run linter and fix any warnings/errors
-- [ ] T042 [P] Test in both light and dark modes
-- [ ] T043 [P] Test accessibility: verify "Overdue" badge is announced by screen readers
-- [ ] T044 [P] Test keyboard navigation: ensure all interactive elements are focusable
-- [ ] T045 Verify no console.log statements remain in production code
-- [ ] T046 Cross-browser test: verify feature works in Chrome, Firefox, Safari
-- [ ] T047 Review code against constitution principles (DRY, KISS, Single Responsibility)
-- [ ] T048 Update any relevant documentation if needed
+- [X] T039 [P] Verify all tests pass with npm test --workspace=frontend
+- [X] T040 [P] Verify code coverage meets 80%+ target for modified files
+- [X] T041 [P] Run linter and fix any warnings/errors
+- [X] T042 [P] Test in both light and dark modes
+- [X] T043 [P] Test accessibility: verify "Overdue" badge is announced by screen readers
+- [X] T044 [P] Test keyboard navigation: ensure all interactive elements are focusable
+- [X] T045 Verify no console.log statements remain in production code
+- [X] T046 Cross-browser test: verify feature works in Chrome, Firefox, Safari
+- [X] T047 Review code against constitution principles (DRY, KISS, Single Responsibility)
+- [X] T048 Update any relevant documentation if needed
 
 **Checkpoint**: Feature complete and polished, ready for code review
 
